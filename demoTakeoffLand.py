@@ -3,7 +3,7 @@ Demo taking off and landing
 """
 
 from Mambo import Mambo
-from constants import MAMBO_ADDR
+from settings import MAMBO_ADDR
 
 mamboAddr = MAMBO_ADDR
 

@@ -3,7 +3,7 @@ Demo the trick flying for the pymambo interface
 """
 
 from Mambo import Mambo
-from constants import MAMBO_ADDR
+from settings import MAMBO_ADDR
 
 # you will need to change this to the address of YOUR mambo
 mamboAddr = MAMBO_ADDR
@@ -23,7 +23,7 @@ mambo.smart_sleep(2)
 
 print("taking off!")
 mambo.safe_takeoff(5)
-# 
+#
 # print("flip left")
 # success = mambo.flip(direction="left")
 # print("mambo flip result %s" % success)

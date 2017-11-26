@@ -1,4 +1,5 @@
 from bluepy.btle import Scanner, DefaultDelegate
+from settings import BLE_INTERFACE
 
 class ScanDelegate(DefaultDelegate):
     def __init__(self):
@@ -10,7 +11,7 @@ class ScanDelegate(DefaultDelegate):
         elif isNewData:
             print("Received new data from", dev.addr)
 
-scanner = Scanner(1).withDelegate(ScanDelegate())
+scanner = Scanner(BLE_INTERFACE).withDelegate(ScanDelegate())
 devices = scanner.scan(10.0)
 
 for dev in devices:
