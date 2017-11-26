@@ -6,11 +6,11 @@ class ScanDelegate(DefaultDelegate):
 
     def handleDiscovery(self, dev, isNewDev, isNewData):
         if isNewDev:
-            print "Discovered device", dev.addr
+            print("Discovered device", dev.addr)
         elif isNewData:
-            print "Received new data from", dev.addr
+            print("Received new data from", dev.addr)
 
-scanner = Scanner().withDelegate(ScanDelegate())
+scanner = Scanner(1).withDelegate(ScanDelegate())
 devices = scanner.scan(10.0)
 
 for dev in devices:
@@ -19,6 +19,6 @@ for dev in devices:
         #print "  %s = %s" % (desc, value)
         if (desc == "Complete Local Name"):
             if ("Mambo" in value):
-                print "FOUND A MAMBO!"
-                print "Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi)
-                print "  %s = %s" % (desc, value)
+                print("FOUND A MAMBO!")
+                print("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))
+                print("  %s = %s" % (desc, value))

@@ -66,7 +66,7 @@ class MamboVision:
 
         :return True if the vision opened correctly and False otherwise
         """
-        print "opening the camera"
+        print("opening the camera")
         self.capture = cv2.VideoCapture("rtsp://192.168.99.1/media/stream2")
 
         #print self.capture.get(cv2.CV_CAP_PROPS_FPS)
@@ -74,7 +74,7 @@ class MamboVision:
         # if it didn't open the first time, try again a maximum number of times
         try_num = 1
         while (not self.capture.isOpened() and try_num < max_retries):
-            print "re-trying to open the capture"
+            print("re-trying to open the capture")
             self.capture = cv2.VideoCapture("rtsp://192.168.99.1/media/stream2")
             try_num += 1
 
@@ -88,7 +88,7 @@ class MamboVision:
         :return:
         """
         if (self.capture.isOpened()):
-            print "starting vision thread"
+            print("starting vision thread")
             self.vision_thread.start()
 
     def _buffer_vision(self, fps, buffer_size):
@@ -102,18 +102,18 @@ class MamboVision:
 
         while (self.vision_running):
             # grab the latest image
-            print "grabbing frame"
+            print("grabbing frame")
             capture_correct, video_frame = self.capture.read()
-            print capture_correct
+            print(capture_correct)
             if (capture_correct):
                 self.buffer_index += 1
                 self.buffer_index %= buffer_size
-                print "saving frame to buffer"
+                print("saving frame to buffer")
                 #print video_frame
                 self.buffer[self.buffer_index] = video_frame
                 
             # put the thread back to sleep for fps
-            print "sleeping for %f" % (1.0 / fps)
+            print("sleeping for %f" % (1.0 / fps))
             time.sleep(1.0 / fps)
         
 

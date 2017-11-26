@@ -292,15 +292,15 @@ class Mambo:
         # prints the messages in color according to their level
         if (level >= self.debug_level):
             if (level >= 10):
-                print('\033[38;5;196m' + print_str + '\033[0m')
+                print(('\033[38;5;196m' + print_str + '\033[0m'))
             elif (level >= 9):
-                print('\033[38;5;202m' + print_str + '\033[0m')
+                print(('\033[38;5;202m' + print_str + '\033[0m'))
             elif (level >= 5):
-                print('\033[38;5;22m' + print_str + '\033[0m')
+                print(('\033[38;5;22m' + print_str + '\033[0m'))
             elif (level >= 2):
-                print('\033[38;5;33m' + print_str + '\033[0m')
+                print(('\033[38;5;33m' + print_str + '\033[0m'))
             else:
-                print print_str
+                print(print_str)
 
     def connect(self, num_retries):
         """
@@ -419,23 +419,23 @@ class Mambo:
 
             # check to see if all 8 characteristics were found
             allServicesFound = True
-            for r_id in self.characteristic_receive_uuids.itervalues():
+            for r_id in self.characteristic_receive_uuids.values():
                 if r_id not in self.receive_characteristics:
                     self._debug_print("setting to false in receive on %s" % r_id, 5)
                     allServicesFound = False
 
-            for s_id in self.characteristic_send_uuids.itervalues():
+            for s_id in self.characteristic_send_uuids.values():
                 if s_id not in self.send_characteristics:
                     self._debug_print("setting to false in send", 5)
                     allServicesFound = False
 
-            for f_id in self.characteristic_ftp_uuids.itervalues():
+            for f_id in self.characteristic_ftp_uuids.values():
                 if f_id not in self.ftp_characteristics:
                     self._debug_print("setting to false in ftp", 5)
                     allServicesFound = False
 
             # and ensure all handshake characteristics were found
-            if len(self.handshake_characteristics.keys()) != 10:
+            if len(list(self.handshake_characteristics.keys())) != 10:
                 self._debug_print("setting to false in len", 5)
                 allServicesFound = False
 
@@ -458,7 +458,7 @@ class Mambo:
         self._debug_print("magic handshake to make the drone listen to our commands", 2)
         
         # Note this code snippet below more or less came from the python example posted to that forum (I adapted it to my interface)
-        for c in self.handshake_characteristics.itervalues():
+        for c in self.handshake_characteristics.values():
             # for some reason bluepy characteristic handle is two lower than what I need...
             # Need to write 0x0100 to the characteristics value handle (which is 2 higher)
             self.drone.writeCharacteristic(c.handle + 2, struct.pack("<BB", 1, 0))
@@ -478,12 +478,12 @@ class Mambo:
         :param data: BLE packet of sensor data
         :return:
         """
-        print "updating sensors with "
+        print("updating sensors with ")
         header_tuple = struct.unpack_from("<BBBBBB", data)
-        print header_tuple
+        print(header_tuple)
         (names, data_sizes) = self._parse_sensor_tuple(header_tuple)
-        print "name of sensor is %s" % names
-        print "data size is %s" % data_sizes
+        print("name of sensor is %s" % names)
+        print("data size is %s" % data_sizes)
 
         if names is not None:
             for idx, name in enumerate(names):
@@ -652,14 +652,14 @@ class Mambo:
 
         num_zeros = BLE_PACKET_MAX_SIZE-len(self.ftp_commands["list"])
         my_zeros = "\0" * num_zeros
-        print len(my_zeros)
-        print self.ftp_commands["list"]
+        print(len(my_zeros))
+        print(self.ftp_commands["list"])
         fmt = format("<3s%dss" % num_zeros)
-        print fmt
+        print(fmt)
 
         packet = struct.pack(fmt, self.ftp_commands["list"], my_zeros, "/.")
-        print len(packet)
-        print packet
+        print(len(packet))
+        print(packet)
                 
         self.ftp_characteristics['NORMAL_FTP_HANDLING'].write(packet)
 
@@ -770,11 +770,11 @@ class Mambo:
         :param cmd: command to execute (from XML file)
         :return:
         """
-        print "get command tuple with enum"
+        print("get command tuple with enum")
         # only search if it isn't already in the cache
         if (myclass, cmd, enum_name) in self.command_tuple_cache:
-            print "using the cache"
-            print self.command_tuple_cache[(myclass, cmd, enum_name)]
+            print("using the cache")
+            print(self.command_tuple_cache[(myclass, cmd, enum_name)])
             return self.command_tuple_cache[(myclass, cmd, enum_name)]
 
         # run the search first in minidrone xml and then hit common if that failed
@@ -800,7 +800,7 @@ class Mambo:
                                         # cache the result
                                         self.command_tuple_cache[(myclass, cmd, enum_name)] = ((project_id, class_id, cmd_id), enum_id)
 
-                                        print  ((project_id, class_id, cmd_id), enum_id)
+                                        print(((project_id, class_id, cmd_id), enum_id))
                                         return ((project_id, class_id, cmd_id), enum_id)
 
         # common
@@ -826,7 +826,7 @@ class Mambo:
                                         # cache the result
                                         self.command_tuple_cache[(myclass, cmd, enum_name)] = ((project_id, class_id, cmd_id), enum_id)
 
-                                        print ((project_id, class_id, cmd_id), enum_id)
+                                        print(((project_id, class_id, cmd_id), enum_id))
                                         return ((project_id, class_id, cmd_id), enum_id)
 
 
@@ -990,8 +990,8 @@ class Mambo:
         :return: True if the command was sent and False otherwise
         """
         if (direction not in ("front", "back", "right", "left")):
-            print "Error: %s is not a valid direction.  Must be one of %s" % direction, "front, back, right, or left"
-            print "Ignoring command and returning"
+            print("Error: %s is not a valid direction.  Must be one of %s" % direction, "front, back, right, or left")
+            print("Ignoring command and returning")
             return
 
         (command_tuple, enum_tuple) = self._get_command_tuple_with_enum("Animations", "Flip", direction)
