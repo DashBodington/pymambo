@@ -28,11 +28,11 @@ mambo.safe_takeoff(5)
 
 
 print('capturing shifts')
-mambo.fly_direct(roll=50, pitch=0, yaw=0, vertical_movement=0, duration=0.25)
+mambo.fly_direct(roll=50, pitch=0, yaw=0, vertical_movement=0, duration=0.1)
 mambo.smart_sleep(1)
-mambo.fly_direct(roll=-50, pitch=0, yaw=0, vertical_movement=0, duration=0.5)
+mambo.fly_direct(roll=-50, pitch=0, yaw=0, vertical_movement=0, duration=0.2)
 mambo.smart_sleep(1)
-mambo.fly_direct(roll=50, pitch=0, yaw=0, vertical_movement=0, duration=0.25)
+mambo.fly_direct(roll=50, pitch=0, yaw=0, vertical_movement=0, duration=0.1)
 
 print("landing")
 mambo.safe_land()
